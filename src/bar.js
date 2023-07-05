@@ -378,10 +378,13 @@ export default class Bar {
     }
 
     update_label_position() {
+        if(typeof this.$bar == "undefined"){
+            return;
+        }
         const bar = this.$bar,
             label = this.group.querySelector('.bar-label');
         let barWidth = bar.getWidth()
-
+        if( barWidth <= 0) return;
         if (label.getBBox().width > barWidth) {
 
             // label.classList.add('big');

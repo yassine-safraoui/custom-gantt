@@ -4,7 +4,7 @@ import Bar from './bar';
 import Arrow from './arrow';
 import Popup from './popup';
 
-import './gantt.scss';
+import './gantt.css';
 
 const VIEW_MODE = {
     QUARTER_DAY: 'Quarter Day',
@@ -391,7 +391,7 @@ export default class Gantt {
                 tick_class += ' thick';
             }
             // thick ticks for quarters
-            if (this.view_is(VIEW_MODE.MONTH) && date.getMonth() % 3 === 0) {
+                       if (this.view_is(VIEW_MODE.MONTH) && date.getMonth() % 3 === 0) {
                 tick_class += ' thick';
             }
 
@@ -661,6 +661,7 @@ export default class Gantt {
         }
 
         $.on(this.$svg, 'mousedown', '.bar-wrapper, .handle', (e, element) => {
+            return;
             const bar_wrapper = $.closest('.bar-wrapper', element);
 
             if (element.classList.contains('left')) {

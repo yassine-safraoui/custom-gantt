@@ -32,8 +32,8 @@ export default class Bar {
         this.width = this.gantt.options.column_width * this.duration;
         this.progress_width =
             this.gantt.options.column_width *
-                this.duration *
-                (this.task.progress / 100) || 0;
+            this.duration *
+            (this.task.progress / 100) || 0;
         this.group = createSVG('g', {
             class: 'bar-wrapper ' + (this.task.custom_class || ''),
             'data-id': this.task.id,
@@ -113,6 +113,8 @@ export default class Bar {
             x: this.x + this.width / 2,
             y: this.y + this.height / 2,
             innerHTML: this.task.name,
+            "data-content": this.task.name,
+            "data-is-clipping": false,
             class: 'bar-label',
             append_to: this.bar_group,
         });
@@ -368,7 +370,6 @@ export default class Bar {
     }
 
     update_progressbar_position() {
-        if (this.invalid) return;
         this.$bar_progress.setAttribute('x', this.$bar.getX());
         this.$bar_progress.setAttribute(
             'width',
@@ -379,18 +380,37 @@ export default class Bar {
     update_label_position() {
         const bar = this.$bar,
             label = this.group.querySelector('.bar-label');
+        let barWidth = bar.getWidth()
 
-        if (label.getBBox().width > bar.getWidth()) {
-            label.classList.add('big');
-            label.setAttribute('x', bar.getX() + bar.getWidth() + 5);
+        if (label.getBBox().width > barWidth) {
+
+            // label.classList.add('big');
+            // label.setAttribute('x', bar.getX() + bar.getWidth() + 5);
+            label.setAttribute('x', bar.getX() + 5);
+            label.style.textAnchor = "initial";
+            
+            if (label.getAttribute("data-is-clipping") == "false") {
+                label.setAttribute("data-is-clipping", true)
+            }
+            let trimPosition = label.textContent.length
+            while (label.getSubStringLength(0, trimPosition) > barWidth) {
+                trimPosition--
+            }
+            label.textContent = label.textContent.substring(0, trimPosition - 3) + "..."
         } else {
-            label.classList.remove('big');
-            label.setAttribute('x', bar.getX() + bar.getWidth() / 2);
+            // label.classList.remove('big');
+            if (label.getAttribute("data-is-clipping") == "true") {
+                label.textContent = label.getAttribute("data-content")
+                label.setAttribute("data-is-clipping", false)
+                return this.update_label_position()
+            } else {
+                label.style.textAnchor = "middle";
+                label.setAttribute('x', bar.getX() + bar.getWidth() / 2);
+            }
         }
     }
 
     update_handle_position() {
-        if (this.invalid) return;
         const bar = this.$bar;
         this.handle_group
             .querySelector('.handle.left')

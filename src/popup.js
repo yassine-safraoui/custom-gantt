@@ -33,6 +33,7 @@ export default class Popup {
             html += '<div class="pointer"></div>';
             this.parent.innerHTML = html;
             this.pointer = this.parent.querySelector('.pointer');
+            this.parent.style.width = this.parent.clientWidth + 'px';
         } else {
             // set data
             this.title.innerHTML = options.title;

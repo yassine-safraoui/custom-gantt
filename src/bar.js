@@ -212,22 +212,13 @@ export default class Bar {
             this.gantt.options.language
         );
         const subtitle = start_date + ' - ' + end_date;
-        let position = "right"
-        if(((parentBox, childBox)=>{
-            return (childBox.x + childBox.width) < (parentBox.x + parentBox.width)
-            })
-            (this.gantt.popup_wrapper.getBoundingClientRect(), this.gantt.$container.getBoundingClientRect())
-            ){
-            position = "left"
-        }
-        this.gantt.popup_wrapper
+        
         console.log(this)
         this.gantt.show_popup({
             target_element: this.$bar,
             title: this.task.name,
             subtitle: subtitle,
             task: this.task,
-            position : position
         });
         console.log(this)
     }

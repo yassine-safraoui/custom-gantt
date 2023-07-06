@@ -27,7 +27,7 @@ export default class Popup {
             options.position = 'left';
         }
         const target_element = options.target_element;
-
+        this.parent.style.opacity = 0;
         if (this.custom_html) {
             let html = this.custom_html(options.task);
             html += '<div class="pointer"></div>';

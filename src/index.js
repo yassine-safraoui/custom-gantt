@@ -854,6 +854,7 @@ export default class Gantt {
     unselect_all() {
         [...this.$svg.querySelectorAll('.bar-wrapper')].forEach((el) => {
             el.classList.remove('active');
+
         });
     }
 
@@ -887,8 +888,22 @@ export default class Gantt {
                 this.popup_wrapper,
                 this.options.custom_popup_html
             );
+        }else{
+            this.popup_wrapper.style.opacity = 0;
         }
-        this.popup.show(options);
+
+        // this.popup_wrapper.style.left = this.$bar.getBoundingClientRect().x + (this.$bar.getBoundingClientRect().width + 10) + 'px';; 
+        
+        let position = "right"
+        if(((parentBox, childBox)=>{
+            return (childBox.x + childBox.width) < (parentBox.x + parentBox.width)
+            })
+            (this.popup_wrapper.getBoundingClientRect(), this.$container.getBoundingClientRect())
+            ){
+            position = "left"
+        }
+
+        this.popup.show({...options, position : position});
     }
 
     hide_popup() {

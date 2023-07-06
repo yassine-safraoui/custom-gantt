@@ -32,7 +32,7 @@ declare namespace Gantt {
         invalid?: boolean | undefined;
     }
 
-    interface Options {
+    interface Options<CustomTask extends Task> {
         header_height?: number | undefined;
         column_width?: number | undefined;
         step?: number | undefined;
@@ -43,7 +43,7 @@ declare namespace Gantt {
         padding?: number | undefined;
         view_mode?: viewMode | undefined;
         date_format?: string | undefined;
-        custom_popup_html?: string | ((task: EnrichedTask) => string) | undefined;
+        custom_popup_html?: string | ((task: EnrichedTask & CustomTask) => string) | undefined;
         language?: string | undefined;
         on_click?: ((task: EnrichedTask) => void) | undefined;
         on_date_change?: ((task: EnrichedTask, start: Date, end: Date) => void) | undefined;

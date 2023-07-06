@@ -48,8 +48,7 @@ export default class Popup {
         } else if (target_element instanceof SVGElement) {
             position_meta = options.target_element.getBBox();
         }
-
-        if (options.position === 'left') {
+        if (options.position === 'right') {
             this.parent.style.left =
                 position_meta.x + (position_meta.width + 10) + 'px';
             this.parent.style.top = position_meta.y + 'px';
@@ -57,11 +56,22 @@ export default class Popup {
             this.pointer.style.transform = 'rotateZ(90deg)';
             this.pointer.style.left = '-7px';
             this.pointer.style.top = '2px';
+        }else if(options.position === 'left'){
+            this.parent.style.left =
+                (position_meta.x - (this.parent.clientWidth + 5)) + 'px';
+            this.parent.style.top = position_meta.y + 'px';
+
+            this.pointer.style.transform = 'rotateZ(-90deg)';
+            this.pointer.style.right = '-12px';
+            this.pointer.style.top = '2px';
+
         }
 
         // show
         this.parent.style.opacity = 1;
-    }
+        // console.log(this)
+        // console.log(options)
+        }
 
     hide() {
         this.parent.style.opacity = 0;

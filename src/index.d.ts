@@ -6,8 +6,8 @@
 
 export = Gantt;
 
-declare class Gantt {
-    constructor(wrapper: string | HTMLElement | SVGElement, tasks: Gantt.Task[], options?: Gantt.Options);
+declare class Gantt<CustomTask extends Gantt.Task> {
+    constructor(wrapper: string | HTMLElement | SVGElement, tasks: Gantt.Task[], options?: Gantt.Options<CustomTask>);
 
     change_view_mode(mode: Gantt.viewMode): void;
     refresh(tasks: Gantt.Task[]): void;

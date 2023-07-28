@@ -18,6 +18,12 @@ const VIEW_MODE = {
 export default class Gantt {
     constructor(wrapper, tasks, options) {
         this.setup_wrapper(wrapper);
+        this.setup_wrapper(wrapper);
+        if (tasks.length == 0) {
+            this.$container.style = "text-align: center;padding: 1rem 0;font-size: medium;"
+            this.$container.textContent = options.empty_tasks_error_message ? options.empty_tasks_error_message : "Tasks list is empty"
+            return
+        }
         this.setup_options(options);
         this.setup_tasks(tasks);
         // initialize with default view mode
@@ -42,7 +48,7 @@ export default class Gantt {
         } else {
             throw new TypeError(
                 'Frappé Gantt only supports usage of a string CSS selector,' +
-                    " HTML DOM element or SVG DOM element for the 'element' parameter"
+                " HTML DOM element or SVG DOM element for the 'element' parameter"
             );
         }
 
@@ -307,7 +313,7 @@ export default class Gantt {
             this.options.header_height +
             this.options.padding +
             (this.options.bar_height + this.options.padding) *
-                this.tasks.length;
+            this.tasks.length;
 
         createSVG('rect', {
             x: 0,
@@ -391,7 +397,7 @@ export default class Gantt {
                 tick_class += ' thick';
             }
             // thick ticks for quarters
-                       if (this.view_is(VIEW_MODE.MONTH) && date.getMonth() % 3 === 0) {
+            if (this.view_is(VIEW_MODE.MONTH) && date.getMonth() % 3 === 0) {
                 tick_class += ' thick';
             }
 
@@ -424,7 +430,7 @@ export default class Gantt {
             const width = this.options.column_width;
             const height =
                 (this.options.bar_height + this.options.padding) *
-                    this.tasks.length +
+                this.tasks.length +
                 this.options.header_height +
                 this.options.padding / 2;
 
@@ -511,10 +517,10 @@ export default class Gantt {
                 date.getDate() !== last_date.getDate()
                     ? date.getMonth() !== last_date.getMonth()
                         ? date_utils.format(
-                              date,
-                              'D MMM',
-                              this.options.language
-                          )
+                            date,
+                            'D MMM',
+                            this.options.language
+                        )
                         : date_utils.format(date, 'D', this.options.language)
                     : '',
             Day_upper:
@@ -628,7 +634,7 @@ export default class Gantt {
 
         const scroll_pos =
             (hours_before_first_task / this.options.step) *
-                this.options.column_width -
+            this.options.column_width -
             this.options.column_width;
 
         parent_element.scrollLeft = scroll_pos;
@@ -888,22 +894,22 @@ export default class Gantt {
                 this.popup_wrapper,
                 this.options.custom_popup_html
             );
-        }else{
+        } else {
             this.popup_wrapper.style.opacity = 0;
         }
 
         // this.popup_wrapper.style.left = this.$bar.getBoundingClientRect().x + (this.$bar.getBoundingClientRect().width + 10) + 'px';; 
-        
+
         let position = "right"
-        if(((parentBox, childBox)=>{
+        if (((parentBox, childBox) => {
             return (childBox.x + childBox.width) < (parentBox.x + parentBox.width)
-            })
+        })
             (this.popup_wrapper.getBoundingClientRect(), this.$container.getBoundingClientRect())
-            ){
+        ) {
             position = "left"
         }
 
-        this.popup.show({...options, position : position});
+        this.popup.show({ ...options, position: position });
     }
 
     hide_popup() {

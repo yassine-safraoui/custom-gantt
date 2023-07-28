@@ -42,6 +42,7 @@ declare namespace Gantt {
         arrow_curve?: number | undefined;
         padding?: number | undefined;
         view_mode?: viewMode | undefined;
+        empty_tasks_error_message?: string | undefined;
         date_format?: string | undefined;
         custom_popup_html?: string | ((task: EnrichedTask & CustomTask) => string) | undefined;
         language?: string | undefined;
